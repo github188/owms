@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ecaray.owms.dao.mapper.orders.ProblemTypeMapper" >
+  <resultMap id="BaseResultMap" type="com.ecaray.owms.entity.orders.ProblemType" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="problem_type" property="problemType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, problem_type
+  </sql>
+  <select id="selectProblemTypes" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+    from problem_type
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from problem_type
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.ecaray.owms.entity.orders.ProblemType" >
+    insert into problem_type (id, problem_type, is_delete
+      )
+    values (#{id,jdbcType=INTEGER}, #{problemType,jdbcType=VARCHAR}, 0
+      )
+  </insert>
+
+  <update id="updateByPrimaryKey" parameterType="com.ecaray.owms.entity.orders.ProblemType" >
+    update problem_type
+    set problem_type = #{problemType,jdbcType=VARCHAR},
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

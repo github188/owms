@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ecaray.owms.dao.mapper.sys.CityMapper" >
+  <resultMap id="BaseResultMap" type="com.ecaray.owms.entity.sys.City" >
+    <result column="city_id" property="cityId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    city_id, name
+  </sql>
+  <select id="selectCityByProvinceId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_city
+    where province_id = #{province_id} ORDER BY city_id
+  </select>
+</mapper>

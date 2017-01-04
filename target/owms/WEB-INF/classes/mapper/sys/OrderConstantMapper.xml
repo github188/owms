@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ecaray.owms.dao.mapper.orders.OrderConstantMapper" >
+
+
+  <resultMap id="OrderTypeResultMap" type="com.ecaray.owms.entity.orders.OrderType" >
+    <result column="con_value" property="typeName" jdbcType="VARCHAR" />
+    <result column="con_id" property="flowId" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Order_Constants" >
+    con_id,con_value
+  </sql>
+
+  <select id="selectOrderTypes" resultMap="OrderTypeResultMap"  >
+    select 
+    <include refid="Order_Constants" />
+    from order_constants where type ='ordertype'
+  </select>
+
+
+<!--订单级别-->
+  <resultMap id="OrderLevelResultMap" type="com.ecaray.owms.entity.orders.OrderLevel" >
+    <result column="con_id" property="orderLevelId" jdbcType="VARCHAR" />
+    <result column="con_value" property="orderLevelName" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectOrderLevels" resultMap="OrderLevelResultMap"  >
+    select
+    <include refid="Order_Constants" />
+    from order_constants where type='orderlevel'
+  </select>
+
+<!--问题类型-->
+  <resultMap id="OrderProblemTypeResultMap" type="com.ecaray.owms.entity.orders.ProblemType" >
+    <result column="con_id" property="id" jdbcType="VARCHAR" />
+    <result column="con_value" property="problemType" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectProblemTypes" resultMap="OrderProblemTypeResultMap"  >
+    select
+    <include refid="Order_Constants" />
+    from order_constants where type='problemtype'
+  </select>
+
+  <resultMap id="OrderOperStatusResultMap" type="com.ecaray.owms.entity.orders.OrderOperStatus" >
+    <result column="con_id" property="operStatus" jdbcType="VARCHAR" />
+    <result column="con_value" property="operStatusName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectOrderOperStatus" resultMap="OrderOperStatusResultMap"  >
+    select
+    <include refid="Order_Constants" />
+    from order_constants where type='operstatus'
+  </select>
+
+
+  <resultMap id="OrderConstantsResultMap"   type="com.ecaray.owms.entity.Vo.OrderConstantsVo">
+    <result property="id" column="con_id" />
+    <result property="value" column="con_value" />
+  </resultMap>
+
+  <select id="selectAllOrderConstants" resultMap="OrderConstantsResultMap">
+    select
+    <include refid="Order_Constants" />
+    from order_constants
+  </select>
+
+
+  <select id="selectMaxIdByType" resultType="java.lang.String">
+    select
+    max(con_id)+1 id
+    from order_constants where type=#{type}
+  </select>
+
+  <insert id="addProblemTypes" parameterType="com.ecaray.owms.entity.Vo.OrderConstantsVo" >
+  insert into order_constants(con_id,con_value,type)
+  values (#{id}, #{value},'problemtype')
+  </insert>
+
+</mapper>

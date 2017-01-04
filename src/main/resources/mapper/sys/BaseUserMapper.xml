@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ecaray.owms.dao.mapper.sys.BaseUserMapper" >
+  <resultMap id="BaseResultMap" type="com.ecaray.owms.entity.sys.BaseUser" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+    <result column="organization" property="organization" jdbcType="VARCHAR" />
+    <result column="roleid" property="roleid" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="createtime" property="createtime" jdbcType="BIGINT" />
+    <result column="updatetime" property="updatetime" jdbcType="BIGINT" />
+    <result column="isvalid" property="isvalid" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="UserRoleResultMap" type="com.ecaray.owms.entity.Vo.BaseUserVo" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="realname" property="realname" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="telphone" property="telphone" jdbcType="VARCHAR" />
+    <result column="organization" property="organization" jdbcType="VARCHAR" />
+    <result column="role_id" property="roleid" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="createtime" property="createtime" jdbcType="BIGINT" />
+    <result column="updatetime" property="updatetime" jdbcType="BIGINT" />
+    <result column="isvalid" property="isvalid" jdbcType="BIT" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, code, username, realname, password, roleid, creator, createtime, updatetime,
+    isvalid
+  </sql>
+
+  <sql id="Query_Column_List" >
+    u.id, u.code, u.username, u.realname,u.organization,u.telphone,u.email
+  </sql>
+
+  <sql id="Query_UserRole_Column_List" >
+    u.id, u.code, u.username, u.realname,u.organization,u.telphone,u.email,r.status ,r.role_id
+  </sql>
+
+  <sql id="Query_UserCache_Column_List">
+    u.id,u.username,u.realname
+
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from base_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from base_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.ecaray.owms.entity.sys.BaseUser" >
+    insert into base_user (id, code, username, 
+      realname, password, roleid, 
+      creator, createtime, updatetime, 
+      isvalid)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+      #{realname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{roleid,jdbcType=INTEGER}, 
+      #{creator,jdbcType=BIGINT}, #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, 
+      #{isvalid,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ecaray.owms.entity.sys.BaseUser" >
+    insert into base_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="realname != null" >
+        realname,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="roleid != null" >
+        roleid,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="isvalid != null" >
+        isvalid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="isvalid != null" >
+        #{isvalid,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ecaray.owms.entity.sys.BaseUser" >
+    update base_user
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null" >
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="roleid != null" >
+        roleid = #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="isvalid != null" >
+        isvalid = #{isvalid,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ecaray.owms.entity.sys.BaseUser" >
+    update base_user
+    set code = #{code,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      roleid = #{roleid,jdbcType=INTEGER},
+      creator = #{creator,jdbcType=BIGINT},
+      createtime = #{createtime,jdbcType=BIGINT},
+      updatetime = #{updatetime,jdbcType=BIGINT},
+      isvalid = #{isvalid,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectPersonByRoleId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Query_Column_List" />
+    from base_user u,sys_user_role r
+    where
+    <trim>
+    <if test="realname != null" >
+      u.realname like #{realname} AND
+    </if>
+    </trim>
+     u.id = r.user_id and r.status=1 and r.role_id=#{roleId}  order by  u.id
+  </select>
+
+
+  <select id="selectBaseUserByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from base_user
+    where username=#{username}
+  </select>
+
+  <select id="selectBaseUserByUserId" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from base_user
+    where id=#{userId}
+  </select>
+  <select id="selectAllUsers" resultMap="BaseResultMap">
+    select
+    <include refid="Query_Column_List" />
+    from base_user u
+  </select>
+
+  <select id="selectRoleUserFilter" resultMap="UserRoleResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Query_UserRole_Column_List" />
+    from base_user u,sys_user_role r
+    where
+    <if test="keyWords != null" >
+      u.realname like #{keyWords} and
+    </if>
+     u.id = r.user_id AND
+     r.role_id =#{roleId} order by username
+  </select>
+
+  <select id="selectUserListByUserId" resultMap="BaseResultMap">
+    Select
+    id,code, username, realname, password,email, roleid, creator, createtime, updatetime,
+    isvalid
+    from base_user where id in
+    <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+  <select id="selectWorkOrderUsers" resultMap="UserRoleResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Query_UserCache_Column_List" />
+    from base_user u,sys_user_role r
+    where
+    u.id = r.user_id
+    order by u.id
+  </select>
+</mapper>
